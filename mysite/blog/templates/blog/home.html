@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+  <div style="padding: 20px 0px;">
+    <a href="{% url 'blog-make-post' %}" >
+      <div class="post-author" style="background-color: white">
+        <h5 style="margin-top: 10px;">make post</h5>
+      </div>
+    </a>
+    </div>
+    {% for post in posts %}
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            {% if post.author.pk == request.user.pk %}
+              <a href="{% url 'user-myprofile' %}">
+                <img height=30 width=30 style="margin-right: 10px;" src="{{ post.author.profile.image.url }}">
+              </a>
+              <a class="post-author" href="{% url 'user-myprofile' %}">{{ post.author }}</a>
+            {% else %}
+              <a href="#">
+                <img height=30 width=30 style="margin-right: 10px;" src="{{ post.author.profile.image.url }}">
+              </a>
+              <a class="post-author" href="#">{{ post.author }}</a>
+            {% endif %}
+            <small class="text-muted">{{ post.date_posted }}</small>
+          </div>
+          <h2><a class="article-title" href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+        </div>
+      </article>
+    {% endfor %}
+{% endblock content %}

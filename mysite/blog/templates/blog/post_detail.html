@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <img class="rounded-circle account-img" src="{{ object.author.profile.image.url }}">
+        <a class="post-author" href="#">{{ object.author }}</a>
+        <small class="text-muted">{{ object.date_posted }}</small>
+      </div>
+      <h2 class="article-title">{{ object.title }}</h2>
+        <p class="article-content">{{ object.content }}</p>
+    </div>
+    <div style="padding: 20px 30px;">
+        {% if request.user.is_authenticated %}
+          <p style="padding: 30px;">is authenticated; DEBUG</p>
+          {% if object.author.pk == request.user.pk %}
+            <p>TRUE; DEBUG</p>
+          {% endif %}
+        {% endif %}
+    </div>
+    <form style="border-style: solid;" method="post">
+      <button type="submit" name="button">Like</button>
+    </form>
+  </article>
+{% endblock content %}
